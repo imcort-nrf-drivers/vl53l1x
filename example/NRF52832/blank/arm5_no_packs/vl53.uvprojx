@@ -398,9 +398,9 @@
               <FilePath>..\..\..\..\..\transfer_handler\transfer_handler.c</FilePath>
             </File>
             <File>
-              <FileName>vl53l1x_class.c</FileName>
+              <FileName>vl53l1x.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\vl53l1x_class.c</FilePath>
+              <FilePath>..\..\..\..\vl53l1x.c</FilePath>
             </File>
           </Files>
         </Group>

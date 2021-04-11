@@ -56,7 +56,7 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
-#include "hdc1080.h"
+#include "vl53l1x.h"
 #include "transfer_handler.h"
 
 /**
@@ -68,24 +68,21 @@ int main(void)
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
     NRF_LOG_INFO("\r\nTWI sensor example started.");
-    NRF_LOG_FLUSH();
-	
-	iic_init();
-	uint16_t id = hdc1080_readDeviceId();
-	
-	hdc1080_begin(HDC1080_CONF_HRES_14BIT | HDC1080_CONF_TRES_14BIT);
-	
-	NRF_LOG_INFO("id%x",id);
-	
-	nrf_delay_ms(500);
-	
+    
+	NRF_LOG_FLUSH();
+		iic_init();
+		bool ret = vl53l1x_begin();
+	NRF_LOG_INFO("status%d",ret);
 
+	uint16_t distance;
     while (true)
     {
-			
-			NRF_LOG_INFO("temp:%d", hdc1080_readTemperature()*100);
-			NRF_LOG_INFO("humi:%d", hdc1080_readHumidity()*100);
-			nrf_delay_ms(500);
+			if(vl53l1x_newDataReady()){
+				distance = vl53l1x_getDistance();
+				NRF_LOG_INFO("distance:%d", distance);
+			}
+
+nrf_delay_ms(500);
         NRF_LOG_FLUSH();
     }
 }
